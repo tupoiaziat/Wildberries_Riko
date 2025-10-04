@@ -3,4 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.13 (wildberries_riko)" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (Wildberries_Riko)" project-jdk-type="Python SDK" />
 </project>
