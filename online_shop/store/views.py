@@ -1,22 +1,36 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .models import UserProfile, Category, SubCategory, Product, ProductImage, Review, Cart, CartItem
-from .serializers import UserProfileSerializer, CategorySerializer, SubCategorySerializer, ProductSerializer, ProductImageSerializer, ReviewSerializer, CartSerializer, CartItemSerializer
+from .serializers import UserProfileSerializer, CategoryListSerializer, CategoryDetailSerializer, SubCategoryListSerializer, \
+    SubCategoryDetailSerializer, ProductListSerializer, ProductDetailSerializer, ProductImageSerializer, ReviewSerializer, CartSerializer, CartItemSerializer
+
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryListAPIView(generics.ListAPIView):
     queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+    serializer_class = CategoryListSerializer
 
-class SubCategoryViewSet(viewsets.ModelViewSet):
+class CategoryDetailAPIView(generics.RetrieveAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryDetailSerializer
+
+class SubCategoryListAPIView(generics.ListAPIView):
     queryset = SubCategory.objects.all()
-    serializer_class = SubCategorySerializer
+    serializer_class = SubCategoryListSerializer
 
-class ProductViewSet(viewsets.ModelViewSet):
+class SubCategoryDetailAPIView(generics.RetrieveAPIView):
+    queryset = SubCategory.objects.all()
+    serializer_class = SubCategoryDetailSerializer
+
+class ProductListAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductListSerializer
+
+class ProductDetailAPIView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductDetailSerializer
 
 class ProductImageViewSet(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
