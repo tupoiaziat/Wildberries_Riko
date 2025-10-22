@@ -6,8 +6,6 @@ router = DefaultRouter()
 router.register(r'users', UserProfileViewSet)
 router.register(r'productimages', ProductImageViewSet)
 router.register(r'reviews', ReviewViewSet)
-router.register(r'carts', CartViewSet)
-router.register(r'cartitems', CartItemViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

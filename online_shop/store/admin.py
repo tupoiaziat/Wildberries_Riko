@@ -50,7 +50,5 @@ class ProductAdmin(TranslationAdmin):
 
 admin.site.register(UserProfile)
 admin.site.register(ProductImage)
-admin.site.register(Cart)
-admin.site.register(CartItem)
 
 

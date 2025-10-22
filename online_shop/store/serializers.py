@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, Category, SubCategory, Product, ProductImage, Review, Cart, CartItem
+from .models import UserProfile, Category, SubCategory, Product, ProductImage, Review
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,12 +29,20 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ['image']
 
+class ReviewSimpleSerializer(serializers.ModelSerializer):
+    user = UserProfileSerializer(read_only=True)
+    class Meta:
+        model = Review
+        fields = ['id', 'user', 'comment', 'stars', 'created_data']
+
+
 class ProductListSerializer(serializers.ModelSerializer):
     product_images = ProductImageSerializer(many=True, read_only=True)
+    review = ReviewSimpleSerializer(read_only=True, many=True)
 
     class Meta:
         model = Product
-        fields = ['id', 'product_name', 'price', 'product_type', 'product_images', 'video', 'sub_category']
+        fields = ['id', 'product_name', 'price', 'product_type', 'product_images', 'review', 'sub_category']
 
 class SubCategoryDetailSerializer(serializers.ModelSerializer):
     products = ProductListSerializer(many=True, read_only=True)
@@ -48,7 +56,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['product_name', 'sub_category', 'price','product_images', 'video', 'article_number', 'product_type']
+        fields = ['product_name', 'sub_category', 'price','product_images', 'article_number', 'product_type']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -58,15 +66,4 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ['id', 'user', 'product', 'comment', 'stars', 'created_data']
 
-class CartSerializer(serializers.ModelSerializer):
-    user = UserProfileSerializer(read_only=True)
-    class Meta:
-        model = Cart
-        fields = ['id', 'user']
 
-class CartItemSerializer(serializers.ModelSerializer):
-    cart = CartSerializer(read_only=True)
-    product = ProductListSerializer(read_only=True)
-    class Meta:
-        model = CartItem
-        fields = ['id', 'cart', 'product', 'quantity']

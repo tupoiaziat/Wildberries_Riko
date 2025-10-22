@@ -1,7 +1,7 @@
 from rest_framework import viewsets, generics
-from .models import UserProfile, Category, SubCategory, Product, ProductImage, Review, Cart, CartItem
+from .models import UserProfile, Category, SubCategory, Product, ProductImage, Review
 from .serializers import UserProfileSerializer, CategoryListSerializer, CategoryDetailSerializer, SubCategoryListSerializer, \
-    SubCategoryDetailSerializer, ProductListSerializer, ProductDetailSerializer, ProductImageSerializer, ReviewSerializer, CartSerializer, CartItemSerializer
+    SubCategoryDetailSerializer, ProductListSerializer, ProductDetailSerializer, ProductImageSerializer, ReviewSerializer
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -40,10 +40,4 @@ class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-class CartViewSet(viewsets.ModelViewSet):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
 
-class CartItemViewSet(viewsets.ModelViewSet):
-    queryset = CartItem.objects.all()
-    serializer_class = CartItemSerializer
