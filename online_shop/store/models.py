@@ -44,6 +44,7 @@ class Product(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='images/')
     product_type = models.BooleanField()
+    created_data = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return  f'{self.product_name} - {self.price}'
@@ -54,7 +55,7 @@ class ProductImage(models.Model):
 
 class Review(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='review')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     comment = models.TextField()
     stars = models.CharField(max_length=1, choices=[(str(i), str(i)) for i in range(1, 6)])
     created_data = models.DateField(auto_now_add=True)

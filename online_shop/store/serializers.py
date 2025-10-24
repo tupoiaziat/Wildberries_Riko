@@ -31,18 +31,19 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ReviewSimpleSerializer(serializers.ModelSerializer):
     user = UserProfileSerializer(read_only=True)
+
     class Meta:
         model = Review
-        fields = ['id', 'user', 'comment', 'stars', 'created_data']
-
+        fields = ['id', 'user', 'product', 'comment', 'stars', 'created_data']
 
 class ProductListSerializer(serializers.ModelSerializer):
     product_images = ProductImageSerializer(many=True, read_only=True)
-    review = ReviewSimpleSerializer(read_only=True, many=True)
+    sub_category = SubCategoryListSerializer()
+    reviews = ReviewSimpleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
-        fields = ['id', 'product_name', 'price', 'product_type', 'product_images', 'review', 'sub_category']
+        fields = ['id', 'product_name', 'price', 'product_type', 'product_images', 'sub_category', 'reviews']
 
 class SubCategoryDetailSerializer(serializers.ModelSerializer):
     products = ProductListSerializer(many=True, read_only=True)
@@ -51,13 +52,6 @@ class SubCategoryDetailSerializer(serializers.ModelSerializer):
         model = SubCategory
         fields = ['subcategory_name', 'products']
 
-class ProductDetailSerializer(serializers.ModelSerializer):
-    product_images = ProductImageSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Product
-        fields = ['product_name', 'sub_category', 'price','product_images', 'article_number', 'product_type']
-
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserProfileSerializer(read_only=True)
@@ -65,5 +59,18 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ['id', 'user', 'product', 'comment', 'stars', 'created_data']
+
+class ProductDetailSerializer(serializers.ModelSerializer):
+    product_images = ProductImageSerializer(many=True, read_only=True)
+    sub_category = SubCategoryListSerializer()
+    created_data = serializers.DateTimeField(format='%d-%m-%Y %H:%M',read_only=True, allow_null=True)
+    reviews = ReviewSerializer(read_only=True, many=True)
+
+
+    class Meta:
+        model = Product
+        fields = ['product_name', 'sub_category', 'price','product_images', 'article_number',
+                  'product_type', 'reviews', 'created_data']
+
 
 
